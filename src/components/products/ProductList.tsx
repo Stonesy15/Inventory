@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PencilIcon, TrashIcon, PlusIcon, EyeIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { Search, Download, Upload, RefreshCw, ArrowUpDown } from 'lucide-react';
 import AddProductModal from '../modals/AddProductModal';
+import EditProductModal from '../modals/EditProductModal';
 import Pagination from '../ui/Pagination';
 
 // Enhanced product data with images and additional fields
@@ -109,6 +110,8 @@ const enhancedProducts = [
 export default function ProductList() {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [productFilter, setProductFilter] = useState('all');
   const [createdByFilter, setCreatedByFilter] = useState('all');
   const [categoryFilter, setCategoryFilter] = useState('all');
@@ -357,7 +360,13 @@ export default function ProductList() {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-lg">
+                      <div 
+                        className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-lg cursor-pointer"
+                        onClick={() => {
+                          setSelectedProduct(product);
+                          setIsEditModalOpen(true);
+                        }}
+                      >
                         {product.image}
                       </div>
                       <span className="text-sm font-medium text-gray-900">{product.name}</span>
@@ -390,7 +399,13 @@ export default function ProductList() {
                   </td>
                   <td className="px-6 py-4 text-right">
                     <div className="flex items-center justify-end gap-2">
-                      <button className="p-1 text-gray-400 hover:text-blue-600 transition-colors">
+                      <button 
+                        className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+                        onClick={() => {
+                          setSelectedProduct(product);
+                          setIsEditModalOpen(true);
+                        }}
+                      >
                         <PencilIcon className="w-4 h-4" />
                       </button>
                       <button className="p-1 text-gray-400 hover:text-red-600 transition-colors">
@@ -419,6 +434,15 @@ export default function ProductList() {
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
       />
+
+      {/* Edit Product Modal */}
+      {selectedProduct && (
+        <EditProductModal 
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          product={selectedProduct}
+        />
+      )}
 
       {sortedProducts.length === 0 && (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">

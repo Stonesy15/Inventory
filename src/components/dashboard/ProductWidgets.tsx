@@ -8,7 +8,7 @@ const topSellingProducts = [
     price: '₦187',
     sales: '247+ Sales',
     percentage: '25%',
-    image: 'https://images.pexels.com/photos/163117/cable-usb-computer-connection-163117.jpeg?auto=compress&cs=tinysrgb&w=100'
+    image: 'https://images.pexels.com/photos/1420709/pexels-photo-1420709.jpeg?auto=compress&cs=tinysrgb&w=100'
   },
   {
     id: '2',
